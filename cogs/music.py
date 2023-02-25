@@ -192,7 +192,11 @@ class Music(commands.Cog):
         # Sets the default volume based on our settings JSON, this is to ensure that the bot isn't _too loud_ when it first enters a chat!
         # this volume can be overridden by using the !volume command -- We should also be saving these settings as per-guild settings --
         # We can use the ctx.guild.id to store this in a settings dict which could be serialized out
-        await player.set_volume(settings['default_volume'])
+        if ctx.guild.id in settings["guild_settings"]:
+            await player.set_volume(settings["guild_settings"][ctx.guild.id]["default_volume"])
+        else:
+            await player.set_volume(settings["default_volume"])
+        
         
 
         # These are commands that require the bot to join a voicechannel (i.e. initiating playback).
@@ -404,7 +408,7 @@ class Music(commands.Cog):
         embed.title = "Volume updated:"
         embed.description = f"Volume updated to: {volume}"
         
-        settings["default_volume"] = volume
+        settings["guild_settings"][ctx.guild.id] = {"default_volume": volume}
 
         await player.set_volume(volume)
         await ctx.send(embed=embed)
