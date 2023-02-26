@@ -1,5 +1,5 @@
 {
-    "default_volume": 5.0,
+    "default_volume": 30.0,
     "spotify_creds": "spotify_secrets.json",
     "discord_token": "token.txt",
     "guild_settings": {}
