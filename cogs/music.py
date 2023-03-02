@@ -429,7 +429,7 @@ class Music(commands.Cog):
         await ctx.send(embed=embed)
     
     @commands.command(aliases=['shuffle'])
-    async def SkipCurrentTrack(self, ctx):
+    async def ShuffleCommand(self, ctx):
         """ Skips the current song and plays the next one in the queue """
         player = self.bot.lavalink.player_manager.get(ctx.guild.id)
         bShouldShuffle = not player.shuffle
@@ -446,7 +446,7 @@ class Music(commands.Cog):
 
 
     @commands.command(aliases=['loop'])
-    async def SkipCurrentTrack(self, ctx, state: int):
+    async def LoopCommand(self, ctx, state: int):
         """ Switches the loop setting, 0 for off, 1 for single track, 2 for queue """
         player = self.bot.lavalink.player_manager.get(ctx.guild.id)
 
@@ -467,7 +467,7 @@ class Music(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(aliases=['clear'])
-    async def SkipCurrentTrack(self, ctx):
+    async def ClearCommand(self, ctx):
         """ Skips the current song and plays the next one in the queue """
         player = self.bot.lavalink.player_manager.get(ctx.guild.id)
 
