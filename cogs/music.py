@@ -427,6 +427,57 @@ class Music(commands.Cog):
 
         await player.skip()
         await ctx.send(embed=embed)
+    
+    @commands.command(aliases=['shuffle'])
+    async def SkipCurrentTrack(self, ctx):
+        """ Skips the current song and plays the next one in the queue """
+        player = self.bot.lavalink.player_manager.get(ctx.guild.id)
+        bShouldShuffle = not player.shuffle
+
+
+        embed = discord.Embed(color=discord.Color.blurple())
+        embed.title = f"Shuffle set to {str(bShouldShuffle)}"
+
+        # TODO: Add next in queue song name, if any
+        embed.description = f"Shuffle set to {str(bShouldShuffle)} by {ctx.author.name}"
+
+        await player.set_shuffle(bShouldShuffle)
+        await ctx.send(embed=embed)
+
+
+    @commands.command(aliases=['loop'])
+    async def SkipCurrentTrack(self, ctx, state: int):
+        """ Switches the loop setting, 0 for off, 1 for single track, 2 for queue """
+        player = self.bot.lavalink.player_manager.get(ctx.guild.id)
+
+
+        embed = discord.Embed(color=discord.Color.blurple())
+        embed.title = f"Loop set to {str(state)}"
+
+        if state == 0:
+            # TODO: Add next in queue song name, if any
+            embed.description = f"Loop turned off by {ctx.author.name}"
+        elif state == 1:
+            embed.description = f"Loop set to single track by {ctx.author.name}"
+        elif state == 2:
+            embed.description = f"Loop set to queue by {ctx.author.name}"
+ 
+
+        await player.set_loop(state)
+        await ctx.send(embed=embed)
+
+    @commands.command(aliases=['clear'])
+    async def SkipCurrentTrack(self, ctx):
+        """ Skips the current song and plays the next one in the queue """
+        player = self.bot.lavalink.player_manager.get(ctx.guild.id)
+
+
+        embed = discord.Embed(color=discord.Color.blurple())
+        embed.title = f"Queue cleared!"
+        player.queue.clear()
+
+        await player.skip()
+        await ctx.send(embed=embed)
 
 async def setup(bot):
    await bot.add_cog(Music(bot))
