@@ -413,5 +413,21 @@ class Music(commands.Cog):
         await player.set_volume(volume)
         await ctx.send(embed=embed)
 
+
+    @commands.command(aliases=['skip'])
+    async def SkipCurrentTrack(self, ctx):
+        """ prints out the current song queue including the currently playing song """
+        player = self.bot.lavalink.player_manager.get(ctx.guild.id)
+
+        embed = discord.Embed(color=discord.Color.blurple())
+
+        embed.title = "Song skipped!"
+
+        # TODO: Add next in queue song name, if any
+        embed.description = f"Current song skipped, playing next in queue"
+
+        await player.skip()
+        await ctx.send(embed=embed)
+
 async def setup(bot):
    await bot.add_cog(Music(bot))
